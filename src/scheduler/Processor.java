@@ -40,6 +40,7 @@ public class Processor {
         }
             Thread thread1 = new Thread() {
                 public void run() {
+                    // Thread 1
                     while(true) {
                         double tEntradaProcesos = generator.generateRandomTime(init, end);
                         System.out.println("Tiempo entrada procesos: " + tEntradaProcesos + "s");
