@@ -18,4 +18,5 @@ public abstract class Policy {
     public final int totalProcesses(){
         return totalProcesses;
     }
+    public void attendProcesses() throws InterruptedException{}
 }

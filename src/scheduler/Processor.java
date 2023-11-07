@@ -5,13 +5,9 @@ import scheduler.scheduling.policies.FirstComeFirstServe;
 import scheduler.scheduling.policies.LastComeFirstServe;
 import scheduler.scheduling.policies.Policy;
 import scheduler.scheduling.policies.PriorityPolicy;
-
 public class Processor {
     int id = 0;
-    double timeArit;
-    double timeIO;
-    double timeCond;
-    double timeLoop;
+    double timeArit; double timeIO; double timeCond; double timeLoop;
     Generator generator;
     Policy policy;
     public Processor() {
@@ -42,35 +38,55 @@ public class Processor {
             default:
                 System.out.println("Ingrese una politica correcta: fcfs,lcfs,pp");
         }
-
-        while(true){
-            double tEntradaProcesos = generator.generateRandomTime(init,end);
-            System.out.println("Tiempo entrada procesos: " + tEntradaProcesos);
-            long miliseconds = (long)tEntradaProcesos*1000;
-            process(miliseconds);
-            SimpleProcess process = generateProcess();
-            policy.add(process);
-        }
+            Thread thread1 = new Thread() {
+                public void run() {
+                    while(true) {
+                        double tEntradaProcesos = generator.generateRandomTime(init, end);
+                        System.out.println("Tiempo entrada procesos: " + tEntradaProcesos + "s");
+                        long milliseconds = (long) tEntradaProcesos * 1000;
+                        try {
+                            process(milliseconds);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        SimpleProcess process = generateProcess();
+                        policy.add(process);
+                    }
+                }
+            };
+            Thread thread2 = new Thread() {
+                public void run() {
+                    // Thread 2
+                    while(true) {
+                        try {
+                            policy.attendProcesses();
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
+            };
+            thread1.start();
+            thread2.start();
     }
     public SimpleProcess generateProcess(){
         int numProcess = generator.generateRandomProcess();
-        System.out.println(numProcess);
         SimpleProcess sp;
         switch(numProcess){
             case 0:
-                System.out.print("arithmetic");
+                System.out.print("Tipo proceso: A\n");
                 sp = new ArithmeticProcess(this.id, timeArit);
                 break;
             case 1:
-                System.out.print("io");
+                System.out.print("Tipo Proceso: IO\n");
                 sp = new IOProcess(this.id,timeIO);
                 break;
             case 2:
-                System.out.print("cond");
+                System.out.print("Tipo proceso C:\n");
                 sp = new ConditionalProcess(this.id, timeCond);
                 break;
             case 3:
-                System.out.print("loop");
+                System.out.print("Tipo proceso L:\n");
                 sp = new LoopProcess(this.id, timeLoop);
                 break;
             default:

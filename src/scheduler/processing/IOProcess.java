@@ -7,13 +7,7 @@ public class IOProcess extends SimpleProcess{
         super(id);
         this.time = time;
     }
-    public void setId(int id) {
-        this.id = id;
-    }
     public double getTime() {
         return time;
-    }
-    public void setTime(long time) {
-        this.time = time;
     }
 }

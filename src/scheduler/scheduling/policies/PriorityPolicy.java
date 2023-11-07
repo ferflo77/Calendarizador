@@ -15,10 +15,18 @@ public class PriorityPolicy extends Policy implements Enqueable{
     }
     @Override
     public SimpleProcess next() {
-        return null;
+        return this.lista.peek();
     }
     @Override
     public void remove() {
+        this.lista.remove();
+    }
 
+    public void attendProcesses() throws InterruptedException {
+        if(!this.lista.isEmpty()){
+            System.out.println("PP: Procesando Proceso con ID:" + this.next().getId());
+            Thread.sleep((long)this.next().getTime());
+            System.out.println("PP: Fin Proceso con ID:" + this.next().getId());
+        }
     }
 }

@@ -15,10 +15,18 @@ public class LastComeFirstServe extends Policy implements Enqueable{
     }
     @Override
     public SimpleProcess next() {
-        return null;
+        return this.pila.peek();
     }
     @Override
     public void remove() {
+        this.pila.removeLast();
+    }
 
+    public void attendProcesses() throws InterruptedException {
+        if(!this.pila.isEmpty()){
+            System.out.println("LCFS: Procesando Proceso con ID:" + this.next().getId());
+            Thread.sleep((long)this.next().getTime());
+            System.out.println("LCFS: Fin Proceso con ID:" + this.next().getId());
+        }
     }
 }
