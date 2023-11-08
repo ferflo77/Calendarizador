@@ -1,8 +1,6 @@
 package scheduler.scheduling.policies;
 
 import scheduler.processing.SimpleProcess;
-
-import java.sql.SQLOutput;
 import java.util.concurrent.ConcurrentLinkedQueue;
 public class FirstComeFirstServe extends Policy implements Enqueable{
     private ConcurrentLinkedQueue<SimpleProcess> cola;

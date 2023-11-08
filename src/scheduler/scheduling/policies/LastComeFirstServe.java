@@ -23,7 +23,6 @@ public class LastComeFirstServe extends Policy implements Enqueable{
         this.size--;
         this.pila.removeLast();
     }
-
     public void attendProcesses() throws InterruptedException {
         if(!this.pila.isEmpty()){
             System.out.println("LCFS: Procesando Proceso con ID:" + this.next().getId());

@@ -2,7 +2,6 @@ package scheduler.scheduling.policies;
 
 import scheduler.processing.SimpleProcess;
 import java.util.LinkedList;
-
 public class PriorityPolicy extends Policy implements Enqueable{
     private LinkedList<SimpleProcess> lista;
     public PriorityPolicy() {

@@ -50,8 +50,7 @@ public class Processor {
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
-                        SimpleProcess process = generateProcess();
-                        policy.add(process);
+                        policy.add(generateProcess());
                     }
                 }
             };

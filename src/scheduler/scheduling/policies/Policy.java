@@ -1,7 +1,6 @@
 package scheduler.scheduling.policies;
 
 import scheduler.processing.SimpleProcess;
-
 public abstract class Policy {
     protected int size;
     protected int totalProcesses;
