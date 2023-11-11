@@ -1,11 +1,16 @@
 package scheduler.scheduling.policies;
 
 import scheduler.processing.SimpleProcess;
+
+import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.LinkedBlockingQueue;
+
 public class PriorityPolicy extends Policy implements Enqueable{
-    private LinkedList<SimpleProcess> lista;
+    private List<SimpleProcess> lista;
     public PriorityPolicy() {
-        this.lista = new LinkedList<>();
+        this.lista = Collections.synchronizedList(new LinkedList<>());
     }
     @Override
     public void add(SimpleProcess p) {
@@ -15,12 +20,12 @@ public class PriorityPolicy extends Policy implements Enqueable{
     }
     @Override
     public SimpleProcess next() {
-        return this.lista.peek();
+        return this.lista.getFirst();
     }
     @Override
     public void remove() {
         this.size--;
-        this.lista.remove();
+        this.lista.removeFirst();
     }
     public void attendProcesses() throws InterruptedException {
         if(!this.lista.isEmpty()){
